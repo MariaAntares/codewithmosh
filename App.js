@@ -1,21 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import {
+  ImageBackground,
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  TextInput,
+  Switch,
+} from "react-native";
+// import Screen from "./app/components/Screen";
+// import Icon from "./app/components/Icon";
+
+//import AccountScreen from "./app/screens/AccountScreen";
+//import ListenDetailsScreen from "./app/screens/ListenDetailsScreen";
+// import AppTextInput from "./app/components/AppTextInput";
+// import AppPicker from "./app/components/AppPicker";
+// import LoginScreen from "./app/screens/LoginScreen";
+// import RegisterScreen from "./app/screens/RegisterScreen";
+import ListingEditScreen from "./app/screens/ListingEditScreen";
+// import Buttons from './app/components/Button';
+// import Card from "./app/components/Card";
+// import ListenDetailsScreen from "./app/components/ListenDetailsScreen";
+//import MessagesScreen from "./app/screens/MessagesScreen";
+// import WelcomeScreen from "./app/screens/WelcomeScreen";
+// import ViewImageScreen from "./app/screens/ViewImageScreen";
+// import ListItem from "./app/components/lists/ListItem";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <ListingEditScreen></ListingEditScreen>;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
