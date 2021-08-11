@@ -1,82 +1,132 @@
 import React from "react";
 import { StyleSheet } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import * as Yup from "yup";
-import CategoryPickerItem from "../components/CategoryPickerItem";
 
+import CategoryPickerItem from "../components/CategoryPickerItem";
 import AppForm from "../components/forms/AppForm";
 import AppFormField from "../components/forms/AppFormField";
 import AppFormPicker from "../components/forms/AppFormPicker";
+import FormImagePicker from "../components/forms/FormImagePicker";
 import SubmitButton from "../components/forms/SubmitButton";
 import Screen from "../components/Screen";
+import useLocation from "../hooks/useLocation";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
   price: Yup.string().required().min(1).max(10000).label("Price"),
   description: Yup.string().label("Description"),
   category: Yup.object().required().nullable().label("Category"),
+  images: Yup.array().min(1, "Please select at least one image."),
 });
 const categories = [
-  { label: "Forniture", value: 1, backgroundColor: "#f4fab4", icon: "apps" },
-  { label: "Clothing", value: 2, backgroundColor: "#95fab9", icon: "email" },
-  { label: "Camera", value: 3, backgroundColor: "#a0d2f3", icon: "lock" },
-  { label: "Forniture", value: 4, backgroundColor: "#fdcae1", icon: "apps" },
-  { label: "Clothing", value: 5, backgroundColor: "#84b6f4", icon: "email" },
-  { label: "Camera", value: 6, backgroundColor: "#ff6961", icon: "lock" },
   {
-    label: "Movies & macos",
-    value: 7,
-    backgroundColor: "#ba9df4",
-    icon: "apps",
+    backgroundColor: "#fc5c65",
+    icon: "floor-lamp",
+    label: "Furniture",
+    value: 1,
   },
-  { label: "Clothing", value: 8, backgroundColor: "#ffda89", icon: "email" },
-  { label: "Camera", value: 9, backgroundColor: "#95fab9", icon: "lock" },
+  {
+    backgroundColor: "#fd9644",
+    icon: "car",
+    label: "Cars",
+    value: 2,
+  },
+  {
+    backgroundColor: "#fed330",
+    icon: "camera",
+    label: "Cameras",
+    value: 3,
+  },
+  {
+    backgroundColor: "#26de81",
+    icon: "cards",
+    label: "Games",
+    value: 4,
+  },
+  {
+    backgroundColor: "#2bcbba",
+    icon: "shoe-heel",
+    label: "Clothing",
+    value: 5,
+  },
+  {
+    backgroundColor: "#45aaf2",
+    icon: "basketball",
+    label: "Sports",
+    value: 6,
+  },
+  {
+    backgroundColor: "#4b7bec",
+    icon: "headphones",
+    label: "Movies & Music",
+    value: 7,
+  },
+  {
+    backgroundColor: "#a55eea",
+    icon: "book-open-variant",
+    label: "Books",
+    value: 8,
+  },
+  {
+    backgroundColor: "#778ca3",
+    icon: "application",
+    label: "Other",
+    value: 9,
+  },
 ];
-function ListingEditScreen(props) {
+function ListingEditScreen() {
+  const location = useLocation();
   return (
-    <Screen style={styles.container}>
-      <AppForm
-        initialValues={{
-          title: "",
-          price: "",
-          description: "",
-          category: null,
-        }}
-        onSubmit={(values) => console.log(values)}
-        validationSchema={validationSchema}
-      >
-        <AppFormField maxLength={255} name="title" placeholder="Title" />
-        <AppFormField
-          keyboardType="numeric"
-          maxLength={8}
-          name="price"
-          placeholder="Price"
-          width={120}
-        />
-        <AppFormPicker
-          items={categories}
-          name="category"
-          numberOfColumns={3}
-          PickerItemComponent={CategoryPickerItem} // se puede comentar number of columns y pickeritemcomponent
-          placeholder="Category"
-          width="50%"
-        />
-        <AppFormField
-          maxLength={255}
-          multiline
-          name="description"
-          numberOfLines={3}
-          placeholder="Description"
-        />
+    <ScrollView>
+      <Screen style={styles.container}>
+        <AppForm
+          initialValues={{
+            title: "",
+            price: "",
+            description: "",
+            category: null,
+            images: [],
+          }}
+          onSubmit={(values) => console.log(values)} //values en los corchetes
+          validationSchema={validationSchema}
+        >
+          <FormImagePicker name="images" />
 
-        <SubmitButton title="Post" />
-      </AppForm>
-    </Screen>
+          <AppFormField maxLength={255} name="title" placeholder="Title" />
+          <AppFormField
+            keyboardType="numeric"
+            maxLength={8}
+            name="price"
+            placeholder="Price"
+            width={120}
+          />
+          <AppFormPicker
+            items={categories}
+            name="category"
+            numberOfColumns={3}
+            PickerItemComponent={CategoryPickerItem} // se puede comentar number of columns y pickeritemcomponent
+            placeholder="Category"
+            width="50%"
+          />
+          <AppFormField
+            maxLength={255}
+            multiline
+            name="description"
+            numberOfLines={3}
+            placeholder="Description"
+          />
+
+          <SubmitButton title="Post" />
+        </AppForm>
+      </Screen>
+    </ScrollView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     padding: 10,
   },
 });
-
 export default ListingEditScreen;
